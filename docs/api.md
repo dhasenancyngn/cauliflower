@@ -13,25 +13,27 @@ The Legacy API is unversioned. This is used for the current version of CyanogenM
 
 #Api Version 1
 
-Unless otherwise stated, all parameters are in json. Versioned APIs start with /api/vX, followed by the URI stated below.
+Versioned APIs start with /api/vX, followed by the URI stated below.
 
 URIs might have a symbol after the HTTP verb. Key:
 
-\*: Requires API Key
-\#: Requires device ID
+\*: Requires authentication
 
 ##Errors
-If an error occurs, the API will return the appropriate HTTP error code, along with a body of {error: message}
+If an error occurs, the API will return the appropriate HTTP error code, along with a body of {error: message, code: error_code, codename: error_codename}
 
 ##Structure
-    /device
+    /devices/
       GET:
         params: (none)
         returns: [{device.manufacturer, device.modelname}]
-    /device/<name>
+    /devices/<name>/
       GET:
         params: none
         returns: {device blob}
+     POST: *
+        params: {device blob}
+        returns: {}
       PUT: *
         params: {device blob}
         returns: {device blob}
@@ -41,9 +43,20 @@ If an error occurs, the API will return the appropriate HTTP error code, along w
       DELETE: *
         params: {}
         returns: {}
-    /build
-      GET: #
-        params: {model}
+    /builds/<device.name>/
+      GET:
+        params: none
+        returns: [builds for model]
+      PUT: *
+        params: {build blob}
+        returns: {}
+    /builds/<device.name>/<type>/:
+      GET:
+        params: none
+        returns: {builds for model of type}
+    /builds/<id>/
+      GET:
+        params: none
         returns: [builds for model]
       POST: *
         params: {build blob}
@@ -54,7 +67,3 @@ If an error occurs, the API will return the appropriate HTTP error code, along w
       DELETE: *
         params: {build id}
         returns: {}
-    /build/<type>:
-      GET: #
-        params: {model}
-        returns: {builds for model of type}
