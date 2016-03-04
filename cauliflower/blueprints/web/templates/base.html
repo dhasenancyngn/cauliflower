@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}} - powered by Cauliflower</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.0/foundation.min.css">
+</head>
+<body>
+<div class="row">
+    <div class="small-12 medium-4 columns callout">
+    {% for device in devices %}
+
+        <a href="/{{device.model}}">{{device.model}}</a> <br />
+    {% endfor %}
+    </div>
+    <div class="small-12 medium-8 columns panel callout">
+        {% block body %}
+        Select your device on the left to get started!
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>

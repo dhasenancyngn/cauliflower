@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+<table>
+    <tr>
+
+        <th>Build Number</th>
+        <th>Type</th>
+        <th>Artifacts</th>
+        <th>Date Added</th>
+    </tr>
+    {% for build in builds %}
+    <tr>
+        <td>{{build.build_number}}</td>
+        <td>{{build.channel}}</td>
+        <td>
+            {% for artifact in build.artifacts|sort(attribute='type') %}
+            <b>{{artifact.type|title}}</b>: <a href="">{{artifact.path.split('/')[-1]}}</a> ({{(artifact.size / 1024 / 1024 )| round(2)}}) MB<br />
+            {% endfor %}
+        </td>
+        <td>{{build.date_created.strftime('%Y-%m-%d')}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
